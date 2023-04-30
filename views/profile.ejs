@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+    <title>Plant care tracker</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+
+    <div class="page-header text-center">
+        <h1><span class="fa fa-anchor"></span> Plant Log </h1>
+        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+    </div>
+
+    <div class="row">
+
+        <!-- LOCAL INFORMATION -->
+        <div class="col-sm-6">
+            <div class="well">
+                <h3><span class="fa fa-user"></span> Local</h3>
+
+                <% if (user.local.email) { %>
+                    <p>
+                        <strong>id</strong>: <%= user._id %><br>
+                        <strong>email</strong>: <%= user.local.email %><br>
+                        <strong>password</strong>: <%= user.local.password %>
+                    </p>
+
+                    <a href="/unlink/local" class="btn btn-default">Unlink</a>
+                <% } else { %>
+                    <a href="/connect/local" class="btn btn-default">Connect Local</a>
+                <% } %>
+
+            </div>
+        </div>
+        <div class="col-sm-6">
+          <h3>Plant care log</h3>
+          <p>Keep track of your plants by logging them. Click the water cup icon when you've watered them to remind yourself when you last watered them. You can also manually enter a date when logging them if that date has already passed.</p>
+          <ul class="messages">
+          <% for(var i=0; i<messages.length; i++) {%>
+            <li class="message">
+              <span><%= messages[i].name %></span>
+              <span><%= messages[i].msg %></span>
+              <span><i class="fa-solid fa-glass-water"></i></span>
+              <span><i class="fa-solid fa-delete-left"></i></i></span>
+            </li>
+          <% } %>
+          </ul>
+
+          <h2>Add a message</h2>
+        <% if (user.local.email) { %>
+          <form action="/messages" method="POST">
+            <input type="text" placeholder="Plant Name" name="name">
+            <input type="date" placeholder="Last Day Watered" name="msg">
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+        <% } %>
+
+</div>
+
+<script src="main.js"></script>
+<script src="https://kit.fontawesome.com/e9f7511864.js" crossorigin="anonymous"></script>
+</body>
+</html>
